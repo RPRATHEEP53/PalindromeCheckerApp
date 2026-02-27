@@ -1,34 +1,35 @@
+import java.util.LinkedList;
+import java.util.Queue;
+import java.util.Stack;
 public class PalindromeCheckerApp {
     public static void main(String[] args) {
-            // Declare and initialize the input string.
-            String input = "radar";
+        // Define the input string to validate
+        String input = "civic";
 
-            // Convert the string into a character array.
-            char[] chars = input.toCharArray();
+        // Create a Queue (FIFO) and a Stack (LIFO)
+        Queue<Character> queue = new LinkedList<>();
+        Stack<Character> stack = new Stack<>();
 
-            // Initialize pointer at the beginning.
-            int start = 0;
-
-            // Initialize pointer at the end.
-            int end = chars.length - 1;
-
-            // Assume palindrome initially.
-            boolean isPalindrome = true;
-
-            // Continue comparison until pointers cross.
-            while (start < end) {
-                // Compare characters at the current pointers
-                if (chars[start] != chars[end]) {
-                    isPalindrome = false;
-                    break; // Exit loop if a mismatch is found
-                }
-                // Move pointers towards the center
-                start++;
-                end--;
-            }
-
-            // Display the output as shown in the requirement
-            System.out.println("Input : " + input);
-            System.out.println("Is Palindrome? : " + isPalindrome);
+        // 1. Enqueue and Push characters
+        for (char c : input.toCharArray()) {
+            queue.add(c);
+            stack.push(c);
         }
+
+        // Flag to track palindrome status
+        boolean isPalindrome = true;
+
+        // 2. Compare dequeue vs pop until the queue is empty
+        while (!queue.isEmpty()) {
+            // If any pair doesn't match, it's not a palindrome
+            if (!queue.poll().equals(stack.pop())) {
+                isPalindrome = false;
+                break;
+            }
+        }
+
+        // Output results
+        System.out.println("Input : " + input);
+        System.out.println("Is Palindrome? : " + isPalindrome);
     }
+}
