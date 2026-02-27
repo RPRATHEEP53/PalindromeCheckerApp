@@ -1,31 +1,38 @@
-import java.util.LinkedList;
+import java.util.Scanner;
 public class PalindromeCheckerApp {
     public static void main(String[] args) {
-        // Define the input string
-        String input = "level";
+        Scanner scanner = new Scanner(System.in);
 
-        // Create a LinkedList to store characters
-        LinkedList<Character> list = new LinkedList<>();
+        System.out.print("Input : ");
+        String input = scanner.nextLine();
 
-        // Add each character to the linked list
-        for (char c : input.toCharArray()) {
-            list.add(c);
-        }
+        // Initial call: start index 0, end index length - 1
+        boolean isPalindrome = check(input, 0, input.length() - 1);
 
-        // Flag to track palindrome state
-        boolean isPalindrome = true;
-
-        // Compare until only one or zero elements remain
-        while (list.size() > 1) {
-            // Remove from both ends and compare for symmetry
-            if (!list.removeFirst().equals(list.removeLast())) {
-                isPalindrome = false;
-                break;
-            }
-        }
-
-        // Output the results as required
-        System.out.println("Input : " + input);
         System.out.println("Is Palindrome? : " + isPalindrome);
+
+        scanner.close();
+    }
+
+    /**
+     * Recursively checks whether a string is a palindrome.
+     * * @param s      Input string
+     * @param start  Starting index
+     * @param end    Ending index
+     * @return true if palindrome, otherwise false
+     */
+    private static boolean check(String s, int start, int end) {
+        // Base Condition 1: If pointers cross or meet, all characters matched
+        if (start >= end) {
+            return true;
+        }
+
+        // Base Condition 2: If characters at current positions don't match
+        if (s.charAt(start) != s.charAt(end)) {
+            return false;
+        }
+
+        // Recursive Step: Move inward and check the next pair
+        return check(s, start + 1, end - 1);
     }
 }
