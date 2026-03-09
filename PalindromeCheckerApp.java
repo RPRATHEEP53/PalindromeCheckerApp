@@ -1,21 +1,30 @@
 import java.util.Scanner;
 import java.util.Stack;
 public class PalindromeCheckerApp {
-
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
 
         System.out.print("Input : ");
         String input = scanner.nextLine();
 
-        // 1. Define and inject the strategy at runtime
-        // Here we choose the Stack-based strategy
+        // Instantiate the strategy to test (e.g., Stack-based)
         PalindromeStrategy strategy = new StackStrategy();
 
-        // 2. Execute the selected algorithm
+        // 1. Capture start time in nanoseconds
+        long startTime = System.nanoTime();
+
+        // 2. Run the algorithm
         boolean isPalindrome = strategy.check(input);
 
+        // 3. Capture end time in nanoseconds
+        long endTime = System.nanoTime();
+
+        // 4. Calculate total execution duration
+        long duration = endTime - startTime;
+
+        // Display results
         System.out.println("Is Palindrome? : " + isPalindrome);
+        System.out.println("Execution Time : " + duration + " ns");
 
         scanner.close();
     }
@@ -23,35 +32,24 @@ public class PalindromeCheckerApp {
 
 /**
  * INTERFACE - PalindromeStrategy
- * Defines a contract for all palindrome checking algorithms.
  */
 interface PalindromeStrategy {
-    /**
-     * @param input String to validate
-     * @return true if palindrome, false otherwise
-     */
     boolean check(String input);
 }
 
 /**
  * CLASS - StackStrategy
- * Provides a Stack-based implementation of the PalindromeStrategy.
- * It uses LIFO behavior to reverse characters and compare them.
+ * Uses LIFO behavior to reverse characters for comparison.
  */
 class StackStrategy implements PalindromeStrategy {
-
     @Override
     public boolean check(String input) {
-        // Create a stack to store characters
-        Stack<Character> stack = new Stack<>();
+        java.util.Stack<Character> stack = new java.util.Stack<>();
 
-        // Push each character of the input string onto the stack
         for (char c : input.toCharArray()) {
             stack.push(c);
         }
 
-        // Compare characters by popping from the stack
-        // Popping provides characters in reverse order (LIFO)
         for (char c : input.toCharArray()) {
             if (c != stack.pop()) {
                 return false;
